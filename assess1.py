@@ -8,7 +8,18 @@ def connect_to_db():
         database = "assessmentdb",
         user     = "postgres",
         password = DB_PASS)
-        
+
     return connection
 
-connect_to_db()
+def get_db_data(connection):
+    list_all = "SELECT * FROM view_contacts;"
+    cursor = connection.cursor()
+    cursor.execute(list_all, )
+    fetch_all = cursor.fetchall()
+    cursor.close()
+    for item in fetch_all:
+        print(item)
+
+    return fetch_all
+
+get_db_data(connect_to_db())
