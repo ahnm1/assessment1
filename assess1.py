@@ -12,7 +12,7 @@ def connect_to_db():
     return connection
 
 def get_db_data(connection):
-    list_all = "SELECT * FROM view_contacts;"
+    list_all = "SELECT * FROM contacts;"
     cursor = connection.cursor()
     cursor.execute(list_all, )
     fetch_all = cursor.fetchall()
@@ -22,6 +22,14 @@ def get_db_data(connection):
 
     return fetch_all
 
+def add_contact(connection, id_number, first_name, last_name, title, organization):
+    add_to = f"INSERT INTO contacts VALUES ({id_number}, '{ first_name }','{ last_name }', '{ title }', '{ organization }');"
+    cursor = connection.cursor()
+    cursor.execute(add_to, (first_name, last_name, title, organization))
+    connection.commit()
+    cursor.close()
+
+
 while True:
     command = input("Welcome to Assessment DB\nList of commands:\nLIST, INSERT, DELETE and EXIT\n").strip()
 
@@ -30,13 +38,20 @@ while True:
         quit()
 
     elif command == "LIST":
+        print("- LIST -")
         get_db_data(connect_to_db())
 
     elif command == "INSERT":
-        print("INSERT: ")
+        id_number    = input("Id number: ").strip()
+        first_name   = input("First name: ").strip()
+        last_name    = input("Last name: ").strip()
+        title        = input("Title: ").strip()
+        organization = input("Organization: ").strip()
+
+        add_contact(connect_to_db(), id_number, first_name, last_name, title, organization)
 
     elif command == "DELETE":
-        print("DELETED: ")
+        print("- DELETED -")
 
     else:
         print(f"Unknown command: '{command}'")
