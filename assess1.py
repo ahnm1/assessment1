@@ -22,4 +22,21 @@ def get_db_data(connection):
 
     return fetch_all
 
-get_db_data(connect_to_db())
+while True:
+    command = input("Welcome to Assessment DB\nList of commands:\nLIST, INSERT, DELETE and EXIT\n").strip()
+
+    if command == "EXIT":
+        connect_to_db().close()
+        quit()
+
+    elif command == "LIST":
+        get_db_data(connect_to_db())
+
+    elif command == "INSERT":
+        print("INSERT: ")
+
+    elif command == "DELETE":
+        print("DELETED: ")
+
+    else:
+        print(f"Unknown command: '{command}'")
